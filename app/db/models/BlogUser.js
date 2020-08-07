@@ -6,14 +6,22 @@ module.exports = function (sequelize, DataTypes) {
         ...idModel(sequelize, DataTypes),
         firstName: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: true
         },
         lastName: {
             type: DataTypes.STRING(50),
-            allowNull: false
+            allowNull: true
         },
         email: {
             type: DataTypes.STRING,
+            allowNull: true
+        },
+        userName: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING(200),
             allowNull: false
         },
     }, {

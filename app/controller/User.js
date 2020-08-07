@@ -1,11 +1,20 @@
 var express = require('express');
 const router = express.Router();
-const service = require('../service/Blog');
+const service = require('../service/User');
 
-// http://localhost:3000/api/v1/app
+// http://localhost:3000/api/v1/user/
 router.get('/', async (req, res) => {
     try {
         const value = await service.getList();
+        res.send(value)
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+// http://localhost:3000/api/v1/user/authenticate
+router.post('/authenticate', async (req, res) => {
+    try {
+        const value = await service.authenticate(req.body.userName, req.body.password);
         res.send(value)
     } catch (error) {
         res.status(500).send(error);
@@ -20,8 +29,8 @@ router.get('/:id', async (req, res) => {
         response.status(500).send(error);
     }
 });
-// http://localhost:3000/api/v1/app
-router.post('/', async (req, res) => {
+// http://localhost:3000/api/v1/register
+router.post('/register', async (req, res) => {
     try {
         const value = await service.save(req.body);
         res.send(value)
