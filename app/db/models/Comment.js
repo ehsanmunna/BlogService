@@ -27,6 +27,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        CommentId: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         isSpam: {
             type: DataTypes.BOOLEAN,
             allowNull: true,

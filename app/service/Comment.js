@@ -2,12 +2,19 @@
 const Sequelize = require('sequelize');
 const uuid = require('uuid').v4;
 const sequelize = require('../db/dbConnection');
+const blogService = require('../service/Blog');
 const Comment = require('../db/models/Comment')(sequelize, Sequelize);
 
 const save = async (value) => {
-    const id = uuid();
-    const app = { ...{id: id}, ...value }
-    return await Comment.save(app);
+    try {
+        value.id = uuid();
+        if (!value.blogId) {
+            throw "blog id required !"
+        }
+        return await Comment.create(value);
+    } catch (error) {
+        throw error;
+    }
 }
 
 const findAll = async () => {
@@ -16,7 +23,7 @@ const findAll = async () => {
 }
 
 const findById = async (id) => {
-    return await Comment.findById(id);
+    return await Comment.findByPk(id);
 }
 
 const update = async (data) => {

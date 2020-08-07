@@ -5,9 +5,12 @@ const sequelize = require('../db/dbConnection');
 const Blog = require('../db/models/BlogPost')(sequelize, Sequelize);
 
 const save = async (value) => {
-    const id = uuid();
-    const app = { ...{id: id}, ...value }
-    return await Blog.save(app);
+    try {
+        value.id = uuid();
+        return await Blog.create(value);
+    } catch (error) {
+        throw error;
+    }
 }
 
 const findAll = async () => {
@@ -16,7 +19,7 @@ const findAll = async () => {
 }
 
 const findById = async (id) => {
-    return await Blog.findById(id);
+    return await Blog.findByPk(id);
 }
 
 const update = async (data) => {

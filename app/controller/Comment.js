@@ -1,6 +1,7 @@
 var express = require('express');
 const router = express.Router();
-const service = require('../service/Blog');
+const auth = require('../helper/auth');
+const service = require('../service/Comment');
 
 // http://localhost:3000/api/v1/app
 router.get('/', async (req, res) => {
@@ -21,8 +22,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 // http://localhost:3000/api/v1/app
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
+        req.body.userId = req.userId;
         const value = await service.save(req.body);
         res.send(value)
     } catch (error) {

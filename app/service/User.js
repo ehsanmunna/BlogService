@@ -8,12 +8,12 @@ const sequelize = require('../db/dbConnection');
 const BlogUser = require('../db/models/BlogUser')(sequelize, Sequelize);
 
 const save = async (userParam) => {
-    const id = uuid();
     // const app = { ...{id: id}, ...value }
     // return await BlogUser.save(app);
-    if (await BlogUser.findOne({ 
+    const userExist = await BlogUser.findOne({
         where: { userName: userParam.userName}
-     })) {
+    });
+    if (userExist) {
         throw 'Username "' + userParam.userName + '" is already taken';
     }
     try {
@@ -53,7 +53,7 @@ const findAll = async () => {
 }
 
 const findById = async (id) => {
-    return await BlogUser.findById(id);
+    return await BlogUser.findByPk(id);
 }
 
 const update = async (data) => {
